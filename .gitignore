@@ -1,0 +1,5 @@
+# IDE files
+.nova/
+
+# Compiled files
+*.pdx
