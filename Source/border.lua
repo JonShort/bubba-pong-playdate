@@ -15,7 +15,7 @@ local function createBorder(xPos, yPos, width, height)
 	border:setCenter(0, 0)
 	border:addSprite()
 	border:setCollideRect(0, 0, width, height)
-	
+
 	return border
 end
 
@@ -25,10 +25,8 @@ function borderSetup()
 	local displayHeight = playdate.display.getHeight()
 
 	local results = {}
-	results["top"] = createBorder(0, 0, displayWidth, borderSize)
-	results["bottom"] = createBorder(0, displayHeight-borderSize, displayWidth, borderSize)
-	results["left"] = createBorder(0, borderSize, borderSize, displayHeight-borderSize*2)
-	results["right"] = createBorder(displayWidth-borderSize, borderSize, borderSize, displayHeight-borderSize*2)
+	results["left"] = createBorder(0, 0, borderSize, displayHeight)
+	results["right"] = createBorder(displayWidth-borderSize, 0, borderSize, displayHeight)
 
 	return results
 end
