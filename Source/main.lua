@@ -19,17 +19,28 @@ local opponent <const> = createOpponent()
 local ball <const> = createBall()
 local borders <const> = borderSetup()
 
-function ball:update()
-	-- To prevent restart - remove eventually
-	if (playdate.buttonJustPressed(playdate.kButtonA)) then
-		ball:reset()
-		return
-	end
+local player_score = 0
+local opponent_score = 0
 
+function ball:update()
 	local next_x = self.x + ball.velocity_x
 	local next_y = self.y + ball.velocity_y
 
 	local actual_x, actual_y, collisions_list, number_of_collisions = self:moveWithCollisions(next_x, next_y)
+
+	-- ball goes above top of screen
+	if (next_y <= 0) then
+		player_score += 1
+		ball:reset()
+		return
+	end
+
+	-- ball goes below bottom of screen
+	if (next_y >= 240) then
+		opponent_score += 1
+		ball:reset()
+		return
+	end
 
 	if (number_of_collisions < 1) then
 		return
@@ -52,5 +63,6 @@ end
 
 function playdate.update()
 	gfx.sprite.update()
+	gfx.drawText(string.format("%i:%i", player_score, opponent_score), 15, 110)
 	playdate.timer.updateTimers()
 end

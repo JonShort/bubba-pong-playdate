@@ -4,7 +4,7 @@ local opponent_width <const> = 60
 local opponent_height <const> = 10
 
 local function drawOpponent()
-	gfx.setLineWidth(0)
+	gfx.setLineWidth(1)
 	gfx.setColor(gfx.kColorBlack)
 	gfx.drawRect(0, 0, opponent_width, opponent_height)
 end

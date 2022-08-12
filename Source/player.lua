@@ -4,7 +4,7 @@ local player_width <const> = 60
 local player_height <const> = 10
 
 local function drawPlayer()
-	gfx.setLineWidth(0)
+	gfx.setLineWidth(1)
 	gfx.setColor(gfx.kColorBlack)
 	gfx.drawRect(0, 0, player_width, player_height)
 end
