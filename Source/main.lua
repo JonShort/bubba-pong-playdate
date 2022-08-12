@@ -9,9 +9,14 @@ import "player"
 import "opponent"
 
 local gfx <const> = playdate.graphics
+local snd <const> = playdate.sound
 
 gfx.setBackgroundColor(gfx.kColorWhite)
 gfx.clear()
+
+-- sounds
+local synth = snd.synth.new(snd.kWaveSawtooth)
+synth:setADSR(0, 0.1, 0, 0)
 
 -- sprites
 local player <const> = createPlayer()
@@ -19,6 +24,7 @@ local opponent <const> = createOpponent()
 local ball <const> = createBall()
 local borders <const> = borderSetup()
 
+-- scores
 local player_score = 0
 local opponent_score = 0
 
@@ -48,6 +54,7 @@ function ball:update()
 
 	if (collision_target:isa(borders["left"]) or collision_target:isa(borders["right"])) then
 		ball.velocity_x = -ball.velocity_x
+		synth:playNote(100)
 		return
 	end
 
@@ -59,7 +66,10 @@ function ball:update()
 	local is_right_hit = ball_x >= target_x + half_segment;
 	local is_left_hit = ball_x <= target_x - half_segment;
 
-	if (collision_target:isa(player) or collision_target:isa(opponent)) then
+	local is_player_hit = collision_target:isa(player)
+	local is_opponent_hit = collision_target:isa(opponent)
+
+	if (is_player_hit or is_opponent_hit) then
 		ball.velocity_y = ball.velocity_y >= 0 and -(ball.velocity_y + 1) or -(ball.velocity_y - 1)
 
 		if (is_right_hit) then
@@ -68,6 +78,14 @@ function ball:update()
 
 		if (is_left_hit) then
 			ball.velocity_x -= 2
+		end
+
+		if (is_player_hit) then
+			synth:playNote(200)
+		end
+
+		if (is_opponent_hit) then
+			synth:playNote(150)
 		end
 	end
 end
