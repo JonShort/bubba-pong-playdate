@@ -48,13 +48,26 @@ function ball:update()
 
 	if (collision_target:isa(borders["left"]) or collision_target:isa(borders["right"])) then
 		ball.velocity_x = -ball.velocity_x
+		return
 	end
 
+	local ball_x, _ = ball:getPosition()
+	local target_x, _ = collision_target:getPosition()
+	local target_size, _ = collision_target:getSize()
+
+	local half_segment = target_size / 6
+	local is_right_hit = ball_x >= target_x + half_segment;
+	local is_left_hit = ball_x <= target_x - half_segment;
+
 	if (collision_target:isa(player) or collision_target:isa(opponent)) then
-		if (ball.velocity_y >= 0) then
-			ball.velocity_y = -(ball.velocity_y + 1)
-		else
-			ball.velocity_y = -(ball.velocity_y - 1)
+		ball.velocity_y = ball.velocity_y >= 0 and -(ball.velocity_y + 1) or -(ball.velocity_y - 1)
+
+		if (is_right_hit) then
+			ball.velocity_x += 2
+		end
+
+		if (is_left_hit) then
+			ball.velocity_x -= 2
 		end
 	end
 end
