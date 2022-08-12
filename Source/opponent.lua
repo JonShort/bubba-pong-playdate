@@ -14,7 +14,7 @@ local function updateOpponent(self)
 	local right_pressed = playdate.buttonIsPressed( playdate.kButtonRight )
 
 	if (left_pressed or right_pressed) then
-		local move_amount = right_pressed and 3 or -3
+		local move_amount = right_pressed and 5 or -5
 
 		if playdate.buttonIsPressed( playdate.kButtonB ) then
 			move_amount *= 2
