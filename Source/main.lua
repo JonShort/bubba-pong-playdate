@@ -28,21 +28,19 @@ function ball:update()
 
 	local actual_x, actual_y, collisions_list, number_of_collisions = self:moveWithCollisions(next_x, next_y)
 
-	-- ball goes above top of screen
-	if (next_y <= 0) then
-		player_score += 1
-		ball:reset()
-		return
-	end
-
-	-- ball goes below bottom of screen
-	if (next_y >= 240) then
-		opponent_score += 1
-		ball:reset()
-		return
-	end
-
 	if (number_of_collisions < 1) then
+		-- ball goes above top of screen
+		if (next_y <= 0) then
+			player_score += 1
+			ball:reset()
+		end
+
+		-- ball goes below bottom of screen
+		if (next_y >= 240) then
+			opponent_score += 1
+			ball:reset()
+		end
+
 		return
 	end
 

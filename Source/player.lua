@@ -10,17 +10,23 @@ local function drawPlayer()
 end
 
 local function updatePlayer(self)
-	local move_amount = 2
+	local left_pressed = playdate.buttonIsPressed( playdate.kButtonLeft )
+	local right_pressed = playdate.buttonIsPressed( playdate.kButtonRight )
 
-	if playdate.buttonIsPressed( playdate.kButtonB ) then
-		move_amount = 4
-	end
+	if (left_pressed or right_pressed) then
+		local move_amount = right_pressed and 3 or -3
 
-	if playdate.buttonIsPressed( playdate.kButtonRight ) then
-		self:moveBy( move_amount, 0 )
-	end
-	if playdate.buttonIsPressed( playdate.kButtonLeft ) then
-		self:moveBy( -move_amount, 0 )
+		if playdate.buttonIsPressed( playdate.kButtonB ) then
+			move_amount *= 2
+		end
+
+		local goal_x = self.x + move_amount
+
+		local actual_x, actual_y, collisions_list, number_of_collisions = self:moveWithCollisions(goal_x, self.y)
+
+		if (number_of_collisions > 0) then
+			return
+		end
 	end
 end
 
