@@ -36,7 +36,7 @@ function createPlayer()
 	player.update = updatePlayer
 	player:setSize(player_width, player_height)
 	player:moveTo(200, 234)
-	player:setCollideRect(0, 0, player:getSize())
+	player:setCollideRect(0, 0, player_width, 1)
 	player:add()
 
 	return player

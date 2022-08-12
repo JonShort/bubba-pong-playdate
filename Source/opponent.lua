@@ -35,7 +35,7 @@ function createOpponent()
 	opponent.draw = drawOpponent
 	opponent.update = updateOpponent
 	opponent:setSize(opponent_width, opponent_height)
-	opponent:setCollideRect(0, 0, opponent:getSize())
+	opponent:setCollideRect(0, opponent_height - 1, opponent_width, 1)
 	opponent:moveTo(200, 7)
 	opponent:add()
 
