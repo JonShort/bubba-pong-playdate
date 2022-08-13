@@ -1,7 +1,5 @@
 local gfx <const> = playdate.graphics
 
-local opponent_width <const> = 60
-local opponent_height <const> = 10
 local base_speed <const> = 5
 local boost_chance <const> = 50
 local is_boosting = false
@@ -27,14 +25,19 @@ local function moveLeft(self, direction)
 end
 
 function createOpponent()
-	local opponent = gfx.sprite.new()
+	local playerImage = gfx.image.new("Images/bubba")
+	assert(playerImage)
+
+	local opponent = gfx.sprite.new(playerImage)
+
+	local sprite_width, sprite_height = opponent:getSize()
+
 	opponent.draw = drawOpponent
 	opponent.moveRight = moveRight
 	opponent.moveLeft = moveLeft
 	opponent.rollForBoostChance = rollForBoostChance
-	opponent:setSize(opponent_width, opponent_height)
-	opponent:setCollideRect(0, opponent_height - 1, opponent_width, 1)
-	opponent:moveTo(200, 7)
+	opponent:setCollideRect(0, sprite_height - 1, sprite_width, 1)
+	opponent:moveTo(200, 10)
 	opponent:add()
 
 	return opponent
