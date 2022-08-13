@@ -2,6 +2,8 @@ local gfx <const> = playdate.graphics
 
 local opponent_width <const> = 60
 local opponent_height <const> = 10
+local boost_chance <const> = 50
+local is_boosting = false
 
 local function drawOpponent()
 	gfx.setLineWidth(1)
@@ -9,31 +11,20 @@ local function drawOpponent()
 	gfx.drawRect(0, 0, opponent_width, opponent_height)
 end
 
-local function updateOpponent(self)
-	local left_pressed = playdate.buttonIsPressed( playdate.kButtonLeft )
-	local right_pressed = playdate.buttonIsPressed( playdate.kButtonRight )
+local function rollForBoostChance()
+	is_boosting = math.random(100) >= boost_chance
+end
 
-	if (left_pressed or right_pressed) then
-		local move_amount = right_pressed and 5 or -5
-
-		if playdate.buttonIsPressed( playdate.kButtonB ) then
-			move_amount *= 2
-		end
-
-		local goal_x = self.x + move_amount
-
-		local actual_x, actual_y, collisions_list, number_of_collisions = self:moveWithCollisions(goal_x, self.y)
-
-		if (number_of_collisions > 0) then
-			return
-		end
-	end
+local function move(self, x_amount)
+	local move_amount = is_boosting and x_amount * 2 or x_amount
+	self:moveWithCollisions(self.x + move_amount, self.y)
 end
 
 function createOpponent()
 	local opponent = gfx.sprite.new()
 	opponent.draw = drawOpponent
-	opponent.update = updateOpponent
+	opponent.move = move
+	opponent.rollForBoostChance = rollForBoostChance
 	opponent:setSize(opponent_width, opponent_height)
 	opponent:setCollideRect(0, opponent_height - 1, opponent_width, 1)
 	opponent:moveTo(200, 7)
