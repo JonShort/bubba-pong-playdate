@@ -33,9 +33,9 @@ function ball:update()
 	local next_y = self.y + ball.velocity_y
 
 	if (next_y < 190 and self.x < opponent.x - 5) then
-		opponent:move(-opponent_move)
+		opponent:moveLeft()
 	elseif (next_y < 190 and self.x > opponent.x + 5) then
-		opponent:move(opponent_move)
+		opponent:moveRight()
 	end
 
 	local actual_x, actual_y, collisions_list, number_of_collisions = self:moveWithCollisions(next_x, next_y)
