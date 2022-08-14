@@ -75,8 +75,8 @@ function ball:update()
 	local is_player_hit = collision_target:isa(player)
 	local is_opponent_hit = collision_target:isa(opponent)
 
-	if (is_player_hit or is_opponent_hit) then
-		ball.velocity_y = ball.velocity_y >= 0 and -(ball.velocity_y + 1) or -(ball.velocity_y - 1)
+	if (is_opponent_hit) then
+		ball.velocity_y = -(ball.velocity_y - 1)
 
 		if (is_right_hit) then
 			ball.velocity_x += 2
@@ -86,14 +86,34 @@ function ball:update()
 			ball.velocity_x -= 2
 		end
 
-		if (is_player_hit) then
-			opponent.rollForBoostChance()
-			synth:playNote(200)
+		synth:playNote(150)
+	end
+
+	if (is_player_hit) then
+		ball.velocity_y = -(ball.velocity_y + 1)
+
+		local movement_delta = 0
+
+		if (is_right_hit) then
+			movement_delta += 2
 		end
 
-		if (is_opponent_hit) then
-			synth:playNote(150)
+		if (is_left_hit) then
+			movement_delta -= 2
 		end
+
+		if (playdate.buttonIsPressed( playdate.kButtonLeft )) then
+			movement_delta -= 2
+		end
+
+		if playdate.buttonIsPressed( playdate.kButtonRight ) then
+			movement_delta += 2
+		end
+
+		ball.velocity_x += movement_delta
+
+		opponent.rollForBoostChance()
+		synth:playNote(200)
 	end
 end
 
