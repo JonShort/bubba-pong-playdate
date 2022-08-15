@@ -27,6 +27,25 @@ local borders <const> = borderSetup()
 -- scores
 local player_score = 0
 local opponent_score = 0
+local target_score = 5
+local winner = ""
+
+-- pause game
+local is_running = true
+
+local function pauseGame()
+	is_running = false
+end
+
+local function resumeGame()
+	is_running = true
+end
+
+local function resetScores()
+	player_score = 0
+	opponent_score = 0
+	winner = ""
+end
 
 function ball:update()
 	local next_x = self.x + ball.velocity_x
@@ -118,6 +137,28 @@ function ball:update()
 end
 
 function playdate.update()
+	if (is_running == false) then
+		gfx.drawTextAligned(string.format("%s Press A to play again", winner), 200, 140, kTextAlignment.center)
+
+		if (playdate.buttonJustPressed( playdate.kButtonA )) then
+			resetScores()
+			resumeGame()
+			ball:reset()
+		else
+			return
+		end
+	end
+
+	if (player_score >= target_score) then
+		winner = "You win!"
+		pauseGame()
+	end
+
+	if (opponent_score >= target_score) then
+		winner = "Bubba wins!"
+		pauseGame()
+	end
+
 	gfx.sprite.update()
 	gfx.drawText(string.format("%i:%i", player_score, opponent_score), 15, 110)
 	playdate.timer.updateTimers()
