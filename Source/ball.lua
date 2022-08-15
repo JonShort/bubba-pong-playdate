@@ -14,8 +14,8 @@ end
 
 local function reset(self)
 	self:moveTo(200, 120)
-	self.velocity_x = 3
-	self.velocity_y = 1
+	self.velocity_x = math.random(-1, 1)
+	self.velocity_y = 3
 end
 
 function createBall()
