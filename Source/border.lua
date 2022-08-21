@@ -13,7 +13,6 @@ local function createBorder(xPos, yPos, width, height)
 	border:setSize(width, height)
 	border:moveTo(xPos, yPos)
 	border:setCenter(0, 0)
-	border:addSprite()
 	border:setCollideRect(0, 0, width, height)
 
 	return border

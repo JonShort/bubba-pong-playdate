@@ -4,6 +4,9 @@ import "stateMachine"
 
 local gfx <const> = playdate.graphics
 
+function winnerOpponentInit()
+end
+
 function winnerOpponentStateUpdater()
 	gfx.drawTextAligned(string.format("You lose!"), 200, 100, kTextAlignment.center)
 

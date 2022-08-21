@@ -20,11 +20,13 @@ local gfx <const> = playdate.graphics
 -- RESTART
 
 local game_state = "INTRO"
+local has_initialised = false
 
 local function newCleanState(newState)
 	gfx.setBackgroundColor(gfx.kColorWhite)
 	gfx.clear()
 	game_state = newState
+	has_initialised = false
 end
 
 function updateState(action)
@@ -62,20 +64,33 @@ function updateState(action)
 	end
 end
 
+local function initIfRequired(initFunc)
+	if (has_initialised == true) then
+		return
+	end
+
+	has_initialised = true
+	initFunc()
+end
+
 function getCurrentUpdater()
 	if (game_state == "INTRO") then
+		initIfRequired(introInit)
 		return introStateUpdater
 	end
 
 	if (game_state == "GAME") then
+		initIfRequired(gameInit)
 		return gameStateUpdater
 	end
 
 	if (game_state == "WINNER_PLAYER") then
+		initIfRequired(winnerPlayerInit)
 		return winnerPlayerStateUpdater
 	end
 
 	if (game_state == "WINNER_OPPONENT") then
+		initIfRequired(winnerOpponentInit)
 		return winnerOpponentStateUpdater
 	end
 end

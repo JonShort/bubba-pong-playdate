@@ -38,7 +38,6 @@ function createOpponent()
 	opponent.rollForBoostChance = rollForBoostChance
 	opponent:setCollideRect(0, sprite_height - 1, sprite_width, 1)
 	opponent:moveTo(200, 10)
-	opponent:add()
 
 	return opponent
 end

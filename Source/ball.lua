@@ -25,7 +25,6 @@ function createBall()
 	ball.reset = reset
 	ball:setSize(10, 10)
 	ball:setCollideRect(1, 1, 8, 8)
-	ball:add()
 	ball:reset()
 
 	return ball

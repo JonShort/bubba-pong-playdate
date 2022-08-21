@@ -28,21 +28,29 @@ local opponent_score = 0
 local target_score = 5
 local winner = ""
 
--- pause game
-local is_running = true
-
-local function pauseGame()
-	is_running = false
-end
-
-local function resumeGame()
-	is_running = true
-end
-
-local function resetScores()
+local function resetGameplay()
 	player_score = 0
 	opponent_score = 0
 	winner = ""
+
+	gfx.sprite.removeSprite(player)
+	gfx.sprite.removeSprite(opponent)
+	gfx.sprite.removeSprite(ball)
+	gfx.sprite.removeSprite(borders["left"])
+	gfx.sprite.removeSprite(borders["right"])
+end
+
+function gameInit()
+	player_score = 0
+	opponent_score = 0
+	winner = ""
+
+	-- setup sprites
+	player:add()
+	opponent:add()
+	ball:add()
+	borders["left"]:add()
+	borders["right"]:add()
 end
 
 function ball:update()
@@ -137,13 +145,13 @@ end
 function gameStateUpdater()
 	if (player_score >= target_score) then
 		updateState("PLAYER_WINS")
-		resetScores()
+		resetGameplay()
 		return
 	end
 
 	if (opponent_score >= target_score) then
 		updateState("OPPONENT_WINS")
-		resetScores()
+		resetGameplay()
 		return
 	end
 
