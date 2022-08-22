@@ -19,78 +19,51 @@ local gfx <const> = playdate.graphics
 -- OPPONENT_WINS
 -- RESTART
 
-local game_state = "INTRO"
-local has_initialised = false
+local current_state = "INTRO"
+local state_methods = introMethods
 
-local function newCleanState(newState)
-	gfx.setBackgroundColor(gfx.kColorWhite)
+-- this handles the very first init of intro
+-- other inits are handled when state changes
+state_methods.init()
+
+local methodMap = {
+	INTRO=introMethods,
+	GAME=gameMethods,
+	WINNER_PLAYER=winnerPlayerMethods,
+	WINNER_OPPONENT=winnerOpponentMethods
+}
+
+local stateMap = {
+	INTRO={
+		START_GAME="GAME"
+	},
+	GAME={
+		PLAYER_WINS="WINNER_PLAYER",
+		OPPONENT_WINS="WINNER_OPPONENT"
+	},
+	WINNER_PLAYER={
+		RESTART="INTRO"
+	},
+	WINNER_OPPONENT={
+		RESTART="INTRO"
+	}
+}
+
+local function newState(new_state)
+	-- cleanup
+	state_methods.cleanup()
+
+	-- setting up the new state
+	current_state = new_state
+	state_methods = methodMap[new_state]
+	state_methods.init()
+end
+
+function sendGamestateAction(action)
+	newState(stateMap[current_state][action])
 	gfx.clear()
-	game_state = newState
-	has_initialised = false
 end
 
-function updateState(action)
-	if (game_state == "INTRO") then
-		if (action == "START_GAME") then
-			newCleanState("GAME")
-			return
-		end
-	end
-
-	if (game_state == "GAME") then
-		if (action == "PLAYER_WINS") then
-			newCleanState("WINNER_PLAYER")
-			return
-		end
-
-		if (action == "OPPONENT_WINS") then
-			newCleanState("WINNER_OPPONENT")
-			return
-		end
-	end
-
-	if (game_state == "WINNER_PLAYER") then
-		if (action == "RESTART") then
-			newCleanState("INTRO")
-			return
-		end
-	end
-
-	if (game_state == "WINNER_OPPONENT") then
-		if (action == "RESTART") then
-			newCleanState("INTRO")
-			return
-		end
-	end
-end
-
-local function initIfRequired(initFunc)
-	if (has_initialised == true) then
-		return
-	end
-
-	has_initialised = true
-	initFunc()
-end
-
-function getCurrentUpdater()
-	if (game_state == "INTRO") then
-		initIfRequired(introInit)
-		return introStateUpdater
-	end
-
-	if (game_state == "GAME") then
-		initIfRequired(gameInit)
-		return gameStateUpdater
-	end
-
-	if (game_state == "WINNER_PLAYER") then
-		initIfRequired(winnerPlayerInit)
-		return winnerPlayerStateUpdater
-	end
-
-	if (game_state == "WINNER_OPPONENT") then
-		initIfRequired(winnerOpponentInit)
-		return winnerOpponentStateUpdater
-	end
+function stateUpdate()
+	state_methods.update()
 end

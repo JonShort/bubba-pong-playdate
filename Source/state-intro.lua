@@ -4,13 +4,22 @@ import "stateMachine"
 
 local gfx <const> = playdate.graphics
 
-function introInit()
+local function init()
 end
 
-function introStateUpdater()
+local function update()
 	gfx.drawTextAligned(string.format("Press A to play"), 200, 120, kTextAlignment.center)
 
 	if (playdate.buttonJustPressed( playdate.kButtonA )) then
-		updateState("START_GAME")
+		sendGamestateAction("START_GAME")
 	end
 end
+
+local function cleanup()
+end
+
+introMethods = {
+	init=init,
+	update=update,
+	cleanup=cleanup
+}

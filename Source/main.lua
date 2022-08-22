@@ -8,6 +8,5 @@ gfx.setBackgroundColor(gfx.kColorWhite)
 gfx.clear()
 
 function playdate:update()
-	local currentUpdater = getCurrentUpdater()
-	currentUpdater()
+	stateUpdate()
 end

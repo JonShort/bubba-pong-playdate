@@ -28,19 +28,7 @@ local opponent_score = 0
 local target_score = 5
 local winner = ""
 
-local function resetGameplay()
-	player_score = 0
-	opponent_score = 0
-	winner = ""
-
-	gfx.sprite.removeSprite(player)
-	gfx.sprite.removeSprite(opponent)
-	gfx.sprite.removeSprite(ball)
-	gfx.sprite.removeSprite(borders["left"])
-	gfx.sprite.removeSprite(borders["right"])
-end
-
-function gameInit()
+local function init()
 	player_score = 0
 	opponent_score = 0
 	winner = ""
@@ -142,16 +130,14 @@ function ball:update()
 	end
 end
 
-function gameStateUpdater()
+local function update()
 	if (player_score >= target_score) then
-		updateState("PLAYER_WINS")
-		resetGameplay()
+		sendGamestateAction("PLAYER_WINS")
 		return
 	end
 
 	if (opponent_score >= target_score) then
-		updateState("OPPONENT_WINS")
-		resetGameplay()
+		sendGamestateAction("OPPONENT_WINS")
 		return
 	end
 
@@ -159,3 +145,21 @@ function gameStateUpdater()
 	playdate.timer.updateTimers()
 	gfx.drawText(string.format("%i:%i", player_score, opponent_score), 15, 110)
 end
+
+local function cleanup()
+	player_score = 0
+	opponent_score = 0
+	winner = ""
+
+	gfx.sprite.removeSprite(player)
+	gfx.sprite.removeSprite(opponent)
+	gfx.sprite.removeSprite(ball)
+	gfx.sprite.removeSprite(borders["left"])
+	gfx.sprite.removeSprite(borders["right"])
+end
+
+gameMethods = {
+	init=init,
+	update=update,
+	cleanup=cleanup
+}
