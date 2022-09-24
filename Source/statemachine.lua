@@ -20,17 +20,17 @@ local gfx <const> = playdate.graphics
 -- RESTART
 
 local current_state = "INTRO"
-local state_methods = introMethods
+local state_methods = IntroMethods
 
 -- this handles the very first init of intro
 -- other inits are handled when state changes
 state_methods.init()
 
 local methodMap = {
-	INTRO=introMethods,
-	GAME=gameMethods,
-	WINNER_PLAYER=winnerPlayerMethods,
-	WINNER_OPPONENT=winnerOpponentMethods
+	INTRO=IntroMethods,
+	GAME=GameMethods,
+	WINNER_PLAYER=WinnerPlayerMethods,
+	WINNER_OPPONENT=WinnerOpponentMethods
 }
 
 local stateMap = {

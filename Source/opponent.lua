@@ -24,7 +24,7 @@ local function moveLeft(self, direction)
 	self:moveWithCollisions(self.x + move_amount, self.y)
 end
 
-function createOpponent()
+function CreateOpponent()
 	local playerImage = gfx.image.new("Images/bubba")
 	assert(playerImage)
 

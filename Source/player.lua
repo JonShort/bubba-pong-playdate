@@ -30,7 +30,7 @@ local function updatePlayer(self)
 	end
 end
 
-function createPlayer()
+function CreatePlayer()
 	local player = gfx.sprite.new()
 	player.draw = drawPlayer
 	player.update = updatePlayer

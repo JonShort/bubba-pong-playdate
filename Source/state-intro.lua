@@ -18,7 +18,7 @@ end
 local function cleanup()
 end
 
-introMethods = {
+IntroMethods = {
 	init=init,
 	update=update,
 	cleanup=cleanup

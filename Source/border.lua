@@ -18,7 +18,7 @@ local function createBorder(xPos, yPos, width, height)
 	return border
 end
 
-function borderSetup()
+function BorderSetup()
 	local borderSize = 2
 	local displayWidth = playdate.display.getWidth()
 	local displayHeight = playdate.display.getHeight()

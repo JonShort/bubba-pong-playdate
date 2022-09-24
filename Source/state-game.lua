@@ -17,10 +17,10 @@ local synth = snd.synth.new(snd.kWaveSawtooth)
 synth:setADSR(0, 0.1, 0, 0)
 
 -- sprites
-local player <const> = createPlayer()
-local opponent <const> = createOpponent()
-local ball <const> = createBall()
-local borders <const> = borderSetup()
+local player <const> = CreatePlayer()
+local opponent <const> = CreateOpponent()
+local ball <const> = CreateBall()
+local borders <const> = BorderSetup()
 
 -- scores
 local player_score = 0
@@ -158,7 +158,7 @@ local function cleanup()
 	gfx.sprite.removeSprite(borders["right"])
 end
 
-gameMethods = {
+GameMethods = {
 	init=init,
 	update=update,
 	cleanup=cleanup

@@ -20,7 +20,7 @@ end
 local function cleanup()
 end
 
-winnerOpponentMethods = {
+WinnerOpponentMethods = {
 	init=init,
 	update=update,
 	cleanup=cleanup

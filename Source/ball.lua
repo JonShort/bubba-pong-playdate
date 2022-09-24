@@ -18,7 +18,7 @@ local function reset(self)
 	self.velocity_y = 3
 end
 
-function createBall()
+function CreateBall()
 	local ball = gfx.sprite.new()
 	ball.draw = drawBall
 	ball.collisonResponse = collisonResponse
