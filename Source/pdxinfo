@@ -3,3 +3,4 @@ description=Play ping pong with Bubba!
 bundleID=com.jonshort.bubbapong
 version=1.0
 buildNumber=0
+imagePath=Images
