@@ -132,12 +132,12 @@ end
 
 local function update()
 	if (player_score >= target_score) then
-		sendGamestateAction("PLAYER_WINS")
+		SendGamestateAction("PLAYER_WINS")
 		return
 	end
 
 	if (opponent_score >= target_score) then
-		sendGamestateAction("OPPONENT_WINS")
+		SendGamestateAction("OPPONENT_WINS")
 		return
 	end
 

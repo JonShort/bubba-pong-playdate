@@ -59,11 +59,11 @@ local function newState(new_state)
 	state_methods.init()
 end
 
-function sendGamestateAction(action)
+function SendGamestateAction(action)
 	newState(stateMap[current_state][action])
 	gfx.clear()
 end
 
-function stateUpdate()
+function StateUpdate()
 	state_methods.update()
 end

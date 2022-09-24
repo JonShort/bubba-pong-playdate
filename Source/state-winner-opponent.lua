@@ -13,7 +13,7 @@ local function update()
 	gfx.drawTextAligned(string.format("Press A to return to title screen"), 200, 140, kTextAlignment.center)
 
 	if (playdate.buttonJustPressed( playdate.kButtonA )) then
-		sendGamestateAction("RESTART")
+		SendGamestateAction("RESTART")
 	end
 end
 
