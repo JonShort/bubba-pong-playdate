@@ -4,12 +4,6 @@ local base_speed <const> = 5
 local boost_chance <const> = 50
 local is_boosting = false
 
-local function drawOpponent()
-	gfx.setLineWidth(1)
-	gfx.setColor(gfx.kColorBlack)
-	gfx.drawRect(0, 0, opponent_width, opponent_height)
-end
-
 local function rollForBoostChance()
 	is_boosting = math.random(100) >= boost_chance
 end
@@ -32,7 +26,6 @@ function CreateOpponent()
 
 	local sprite_width, sprite_height = opponent:getSize()
 
-	opponent.draw = drawOpponent
 	opponent.moveRight = moveRight
 	opponent.moveLeft = moveLeft
 	opponent.rollForBoostChance = rollForBoostChance
