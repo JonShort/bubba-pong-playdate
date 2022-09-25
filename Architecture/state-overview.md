@@ -23,7 +23,7 @@ To give each state full control over gameplay, there are three lifecycle methods
 
 ```lua
 local function init()
-    -- e.g. setup sprites / values
+	-- e.g. setup sprites / values
 end
 
 local function update()
@@ -31,7 +31,7 @@ local function update()
 end
 
 local function cleanup()
-    -- e.g. remove sprites / clear values
+	-- e.g. remove sprites / clear values
 end
 
 -- Lifecycle methods are exposed using a global table, which should be named per-state
